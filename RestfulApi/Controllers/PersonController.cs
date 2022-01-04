@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Models;
-using RestfulApi.Services.Implementations;
 using RestfulApi.Services.Interfaces;
 
 namespace RestfulApi.Controllers
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
         private readonly IPersonService _personService;

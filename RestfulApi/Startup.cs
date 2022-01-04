@@ -30,6 +30,8 @@ namespace RestfulApi
                 options.UseSqlServer(connection));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddApiVersioning();
+
             services.AddScoped<IPersonService, PersonService>();
         }
 
