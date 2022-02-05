@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestfulApi.Facades.Implementations;
+using RestfulApi.Facades.Interfaces;
 using RestfulApi.Services.Implementations;
 using RestfulApi.Services.Interfaces;
 using RestfulApi.Services.Persistence;
@@ -30,7 +32,13 @@ namespace RestfulApi
                 options.UseSqlServer(connection));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddApiVersioning();
+
+            services.AddScoped<IPersonFacade, PersonFacade>();
             services.AddScoped<IPersonService, PersonService>();
+
+            services.AddScoped<IBookFacade, BookFacade>();
+            services.AddScoped<IBookService, BookService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
