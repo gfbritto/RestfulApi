@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestfulApi.Facades.Implementations;
 using RestfulApi.Facades.Interfaces;
 using RestfulApi.Models;
 

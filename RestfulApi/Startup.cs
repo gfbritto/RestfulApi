@@ -36,6 +36,9 @@ namespace RestfulApi
 
             services.AddScoped<IPersonFacade, PersonFacade>();
             services.AddScoped<IPersonService, PersonService>();
+
+            services.AddScoped<IBookFacade, BookFacade>();
+            services.AddScoped<IBookService, BookService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
