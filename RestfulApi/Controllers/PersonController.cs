@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestfulApi.Facades.Implementations;
+using RestfulApi.Facades.Interfaces;
 using RestfulApi.Models;
-using RestfulApi.Services.Interfaces;
 
 namespace RestfulApi.Controllers
 {
@@ -9,17 +10,17 @@ namespace RestfulApi.Controllers
     [Route("[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonService _personService;
+        private readonly IPersonFacade _personFacade;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IPersonFacade personFacade)
         {
-            _personService = personService;
+            _personFacade = personFacade;
         }
 
         [HttpGet]
         public IActionResult GetAllPersons()
         {
-            var result = _personService.FindAll();
+            var result = _personFacade.FindAll();
             if (result == null)
             {
                 return NotFound();
@@ -31,7 +32,7 @@ namespace RestfulApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetPersonById(int id)
         {
-            var result = _personService.FindById(id);
+            var result = _personFacade.FindById(id);
             if (result == null)
             {
                 return NotFound();
@@ -48,8 +49,8 @@ namespace RestfulApi.Controllers
                 return BadRequest();
             }
 
-            _personService.Create(person);
-            return CreatedAtAction(nameof(GetPersonById), new { id = person.Id}, person);
+            _personFacade.Create(person);
+            return CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person);
         }
 
         [HttpPut]
@@ -59,13 +60,13 @@ namespace RestfulApi.Controllers
             {
                 return BadRequest();
             }
-            return Ok(_personService.Update(person));
+            return Ok(_personFacade.Update(person));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _personService.Delete(id);
+            _personFacade.Delete(id);
             return NoContent();
         }
     }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestfulApi.Facades.Implementations;
+using RestfulApi.Facades.Interfaces;
 using RestfulApi.Services.Implementations;
 using RestfulApi.Services.Interfaces;
 using RestfulApi.Services.Persistence;
@@ -32,6 +34,7 @@ namespace RestfulApi
 
             services.AddApiVersioning();
 
+            services.AddScoped<IPersonFacade, PersonFacade>();
             services.AddScoped<IPersonService, PersonService>();
         }
 
