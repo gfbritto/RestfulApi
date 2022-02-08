@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestfulApi.Facades.Interfaces;
+using RestfulApi.Business.Interfaces;
 using RestfulApi.Models;
 
 namespace RestfulApi.Controllers
@@ -9,9 +9,9 @@ namespace RestfulApi.Controllers
     [Route("[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonFacade _personFacade;
+        private readonly IPersonBusiness _personFacade;
 
-        public PersonController(IPersonFacade personFacade)
+        public PersonController(IPersonBusiness personFacade)
         {
             _personFacade = personFacade;
         }

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RestfulApi.Facades\RestfulApi.Facades.csproj" />
+    <ProjectReference Include="..\RestfulApi.Business\RestfulApi.Business.csproj" />
     <ProjectReference Include="..\RestfulApi.Models\RestfulApi.Models.csproj" />
     <ProjectReference Include="..\RestfulApi.Services\RestfulApi.Services.csproj" />
   </ItemGroup>

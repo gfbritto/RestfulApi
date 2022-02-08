@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestfulApi.Facades.Interfaces;
+using RestfulApi.Business.Interfaces;
 using RestfulApi.Models;
-using System.Collections.Generic;
 
 namespace RestfulApi.Controllers
 {
@@ -10,9 +9,9 @@ namespace RestfulApi.Controllers
     [Route("[controller]/v{version:apiVersion}")]
     public class BookController : ControllerBase
     {
-        private readonly IBookFacade _bookFacade;
+        private readonly IBookBusiness _bookFacade;
 
-        public BookController(IBookFacade bookFacade)
+        public BookController(IBookBusiness bookFacade)
         {
             _bookFacade = bookFacade;
         }
