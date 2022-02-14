@@ -1,41 +1,42 @@
 ﻿using RestfulApi.Business.Interfaces;
 using RestfulApi.Models;
-using RestfulApi.Services.Interfaces;
+using RestfulApi.Repository.Interfaces;
 using System.Collections.Generic;
 
 namespace RestfulApi.Business.Implementations
 {
     public class PersonBusiness : IPersonBusiness
     {
-        private readonly IPersonService _personService;
+        private readonly IPersonRepository _personRepository;
 
-        public PersonBusiness(IPersonService personService)
+        public PersonBusiness(IPersonRepository personRepository)
         {
-            _personService = personService;
+            _personRepository = personRepository;
         }
+
         public Person Create(Person person)
         {
-            return _personService.Create(person);
+            return _personRepository.Create(person);
         }
 
         public void Delete(long id)
         {
-            _personService.Delete(id);
+            _personRepository.Delete(id);
         }
 
         public List<Person> FindAll()
         {
-            return _personService.FindAll();
+            return _personRepository.FindAll();
         }
 
         public Person FindById(long id)
         {
-            return _personService.FindById(id);
+            return _personRepository.FindById(id);
         }
 
         public Person Update(Person person)
         {
-            return _personService.Update(person);
+            return _personRepository.Update(person);
         }
     }
 }

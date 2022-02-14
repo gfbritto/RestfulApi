@@ -1,42 +1,42 @@
 ﻿using RestfulApi.Business.Interfaces;
 using RestfulApi.Models;
-using RestfulApi.Services.Interfaces;
+using RestfulApi.Repository.Interfaces;
 using System.Collections.Generic;
 
 namespace RestfulApi.Business.Implementations
 {
     public class BookBusiness : IBookBusiness
     {
-        private readonly IBookService _bookService;
+        private readonly IBookRepository _bookRepository;
 
-        public BookBusiness(IBookService bookService)
+        public BookBusiness(IBookRepository bookRepository)
         {
-            _bookService = bookService;
+            _bookRepository = bookRepository;
         }
 
         public Book Create(Book book)
         {
-            return _bookService.Create(book);
+            return _bookRepository.Create(book);
         }
 
         public void Delete(long id)
         {
-            _bookService.Delete(id);
+            _bookRepository.Delete(id);
         }
 
         public List<Book> FindAll()
         {
-            return _bookService.FindAll();
+            return _bookRepository.FindAll();
         }
 
         public Book FindById(long id)
         {
-            return _bookService.FindById(id);
+            return _bookRepository.FindById(id);
         }
 
         public Book Update(Book book)
         {
-            return _bookService.Update(book);
+            return _bookRepository.Update(book);
         }
     }
 }

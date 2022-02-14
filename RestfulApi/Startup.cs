@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestfulApi.Business.Implementations;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Services.Implementations;
-using RestfulApi.Services.Interfaces;
-using RestfulApi.Services.Persistence;
+using RestfulApi.Repository.Implementations;
+using RestfulApi.Repository.Interfaces;
+using RestfulApi.Repository.Persistence;
 
 namespace RestfulApi
 {
@@ -35,10 +35,10 @@ namespace RestfulApi
             services.AddApiVersioning();
 
             services.AddScoped<IPersonBusiness, PersonBusiness>();
-            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             services.AddScoped<IBookBusiness, BookBusiness>();
-            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IBookRepository, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
