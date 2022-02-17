@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RestfulApi.Models.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace RestfulApi.Models
 {
