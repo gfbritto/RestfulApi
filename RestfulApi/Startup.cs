@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using RestfulApi.Business.Implementations;
 using RestfulApi.Business.Interfaces;
 using RestfulApi.Repository.Implementations;
@@ -30,7 +31,17 @@ namespace RestfulApi
 
             services.AddDbContext<RestfulApiDbContext>(options =>
                 options.UseSqlServer(connection));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+            })
+                .AddXmlSerializerFormatters();
 
             services.AddApiVersioning();
 
