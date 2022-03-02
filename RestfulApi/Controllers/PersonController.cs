@@ -11,9 +11,9 @@ namespace RestfulApi.Controllers
     {
         private readonly IPersonBusiness _personFacade;
 
-        public PersonController(IPersonBusiness personFacade)
+        public PersonController(IPersonBusiness personBusiness)
         {
-            _personFacade = personFacade;
+            _personFacade = personBusiness;
         }
 
         [HttpGet]
