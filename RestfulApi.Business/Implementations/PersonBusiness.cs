@@ -1,5 +1,6 @@
 ﻿using RestfulApi.Business.Interfaces;
-using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.Converter.Implementations;
+using RestfulApi.Models.Data.VO;
 using RestfulApi.Repository.Interfaces;
 using System.Collections.Generic;
 
@@ -8,15 +9,19 @@ namespace RestfulApi.Business.Implementations
     public class PersonBusiness : IPersonBusiness
     {
         private readonly IPersonRepository _personRepository;
+        private readonly PersonConverter _converter;
 
         public PersonBusiness(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
+            _converter = new PersonConverter();
         }
 
-        public Person Create(Person person)
+        public PersonVO Create(PersonVO person)
         {
-            return _personRepository.Create(person);
+            var entity = _converter.Parse(person);
+            entity = _personRepository.Create(entity);
+            return _converter.Parse(entity);
         }
 
         public void Delete(long id)
@@ -24,19 +29,21 @@ namespace RestfulApi.Business.Implementations
             _personRepository.Delete(id);
         }
 
-        public List<Person> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _personRepository.FindAll();
+            return _converter.Parse(_personRepository.FindAll());
         }
 
-        public Person FindById(long id)
+        public PersonVO FindById(long id)
         {
-            return _personRepository.FindById(id);
+            return _converter.Parse(_personRepository.FindById(id));
         }
 
-        public Person Update(Person person)
+        public PersonVO Update(PersonVO person)
         {
-            return _personRepository.Update(person);
+            var entity = _converter.Parse(person);
+            entity = _personRepository.Update(entity);
+            return _converter.Parse(entity);
         }
     }
 }

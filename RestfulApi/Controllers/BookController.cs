@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 
 namespace RestfulApi.Controllers
 {
@@ -44,7 +44,7 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Book book)
+        public IActionResult Create([FromBody] BookVO book)
         {
             var result = _bookFacade.Create(book);
 
@@ -52,7 +52,7 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book book)
+        public IActionResult Update([FromBody] BookVO book)
         {
             return Ok(_bookFacade.Update(book));
         }

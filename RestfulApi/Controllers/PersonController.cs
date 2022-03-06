@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 
 namespace RestfulApi.Controllers
 {
@@ -29,7 +29,7 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPersonById(int id)
+        public IActionResult GetById(int id)
         {
             var result = _personFacade.FindById(id);
             if (result == null)
@@ -41,19 +41,19 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Person person)
+        public IActionResult Create([FromBody] PersonVO person)
         {
             if (person == null)
             {
                 return BadRequest();
             }
 
-            _personFacade.Create(person);
-            return CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person);
+            var result = _personFacade.Create(person);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut]
-        public IActionResult UpdatePerson([FromBody] Person person)
+        public IActionResult UpdatePerson([FromBody] PersonVO person)
         {
             if (person == null)
             {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 
 namespace RestfulApi.Repository.Persistence
 {

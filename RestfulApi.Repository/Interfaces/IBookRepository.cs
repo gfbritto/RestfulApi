@@ -1,4 +1,5 @@
 ﻿using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 using System.Collections.Generic;
 
 namespace RestfulApi.Repository.Interfaces
