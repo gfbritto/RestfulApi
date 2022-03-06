@@ -1,5 +1,5 @@
 ﻿using RestfulApi.Business.Interfaces;
-using RestfulApi.Models;
+using RestfulApi.Models.Core.Entities;
 using RestfulApi.Repository.Interfaces;
 using System.Collections.Generic;
 

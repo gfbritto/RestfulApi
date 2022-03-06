@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Models;
+using RestfulApi.Models.Core.Entities;
 
 namespace RestfulApi.Controllers
 {

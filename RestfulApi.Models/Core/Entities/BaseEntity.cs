@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RestfulApi.Models
+namespace RestfulApi.Models.Core.Entities
 {
     public abstract class BaseEntity
     {
