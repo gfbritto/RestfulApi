@@ -10,6 +10,10 @@ using RestfulApi.Business.Interfaces;
 using RestfulApi.Repository.Implementations;
 using RestfulApi.Repository.Interfaces;
 using RestfulApi.Repository.Persistence;
+using Microsoft.OpenApi.Models;
+using System;
+using RestfulApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace RestfulApi
 {
@@ -45,6 +49,22 @@ namespace RestfulApi
 
             services.AddApiVersioning();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = Constants.PROJECT_NAME,
+                        Version = "v1",
+                        Description = "API RESTful developed in coruse 'REST API's RESTFul do 0 à Azure com ASP.NET Core 5 e Docker'",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Gabriel Brito",
+                            Url = new Uri(Constants.SWAGGER_GITHUB_CONTACT)
+                        }
+                    });
+            });
+
             services.AddScoped<IPersonBusiness, PersonBusiness>();
             services.AddScoped<IPersonRepository, PersonRepository>();
 
@@ -63,6 +83,14 @@ namespace RestfulApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", Constants.PROJECT_NAME));
+
+            var option =  new RewriteOptions();
+            option.AddRedirect("^$","swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 
