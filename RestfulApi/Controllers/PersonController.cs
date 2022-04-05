@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
 using RestfulApi.Models.Data.VO;
+using System.Collections.Generic;
 
 namespace RestfulApi.Controllers
 {
@@ -17,6 +18,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult GetAllPersons()
         {
             var result = _personFacade.FindAll();
@@ -29,6 +34,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult GetById(int id)
         {
             var result = _personFacade.FindById(id);
@@ -41,6 +50,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult Create([FromBody] PersonVO person)
         {
             if (person == null)
@@ -53,6 +66,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult UpdatePerson([FromBody] PersonVO person)
         {
             if (person == null)
@@ -63,6 +80,9 @@ namespace RestfulApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult Delete(long id)
         {
             _personFacade.Delete(id);

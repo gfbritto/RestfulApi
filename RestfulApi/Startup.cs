@@ -31,6 +31,12 @@ namespace RestfulApi
         {
             var connection = Configuration.GetConnectionString("RestfulContext");
 
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+               builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+            ));
+
             services.AddControllers();
 
             services.AddDbContext<RestfulApiDbContext>(options =>
@@ -84,12 +90,14 @@ namespace RestfulApi
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", Constants.PROJECT_NAME));
 
-            var option =  new RewriteOptions();
-            option.AddRedirect("^$","swagger");
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
             app.UseRewriter(option);
 
             app.UseAuthorization();
