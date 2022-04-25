@@ -29,7 +29,6 @@ namespace RestfulApi.Repository.Implementations
             var result = _dbContext.Users.SingleOrDefault(u => u.Id.Equals(user.Id));
             if (result != null)
             {
-                //user.RefreshToken =
                 _dbContext.Entry(result).CurrentValues.SetValues(user);
                 _dbContext.SaveChanges();
                 return result;
