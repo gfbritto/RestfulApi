@@ -16,6 +16,7 @@ namespace RestfulApi.Controllers
             this._loginBusiness = loginBusiness;
         }
 
+        [HttpPost]
         public IActionResult Signin([FromBody] UserVO user)
         {
             var token = _loginBusiness.ValidateCredentials(user);
@@ -24,7 +25,7 @@ namespace RestfulApi.Controllers
             {
                 return Unauthorized();
             }
-            return Ok();
+            return Ok(token);
         }
     }
 }

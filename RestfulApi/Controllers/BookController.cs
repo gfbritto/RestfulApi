@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
 using RestfulApi.Models.Data.VO;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ namespace RestfulApi.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("[controller]/v{version:apiVersion}")]
     public class BookController : ControllerBase
     {
