@@ -1,4 +1,4 @@
-﻿namespace RestfulApi.Configuration
+﻿namespace RestfulApi.Models.Configuration
 {
     public class TokenConfiguration
     {
@@ -10,6 +10,6 @@
 
         public int Minutes { get; set; }
 
-        public int Days { get; set; }
+        public int DaysToExpiry { get; set; }
     }
 }
