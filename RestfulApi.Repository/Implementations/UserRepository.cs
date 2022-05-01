@@ -50,5 +50,10 @@ namespace RestfulApi.Repository.Implementations
             byte[] hashedBytes = algorithm.ComputeHash(inputBytes);
             return BitConverter.ToString(hashedBytes);
         }
+
+        public User ValidateCredentials(string userName)
+        {
+            return _dbContext.Users.SingleOrDefault(user => user.UserName.Equals(userName));
+        }
     }
 }

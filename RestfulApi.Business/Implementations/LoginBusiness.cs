@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.JsonWebTokens;
 using RestfulApi.Business.Interfaces;
 using RestfulApi.Models.Configuration;
+using RestfulApi.Models.Core.Entities;
 using RestfulApi.Models.Data.VO;
 using RestfulApi.Repository.Interfaces;
 using RestfulApi.Services.Interfaces;
@@ -46,6 +47,39 @@ namespace RestfulApi.Business.Implementations
             user.RefreshToken = refreshToken;
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(_configuration.DaysToExpiry);
 
+            _repository.RefreshUserInfo(user);
+
+            return RefreshUserToken(acessToken, refreshToken, user);
+        }
+
+        public TokenVO ValidateCredentials(TokenVO token)
+        {
+            var acessToken = token.AcessToken;
+            var refreshToken = token.RefreshToken;
+
+            var principal = _tokenService.GetPrincipalFromExpiredToken(acessToken);
+
+            var userName = principal.Identity.Name;
+
+            var user = _repository.ValidateCredentials(userName);
+
+            var isInvalidToken = user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now;
+
+            if (user == null || isInvalidToken)
+            {
+                return null;
+            }
+
+            acessToken = _tokenService.GenerateAcessToken(principal.Claims);
+            refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+
+            return RefreshUserToken(acessToken, refreshToken, user);
+        }
+
+        private TokenVO RefreshUserToken(string acessToken, string refreshToken, User user)
+        {
             _repository.RefreshUserInfo(user);
 
             var createDate = DateTime.Now;

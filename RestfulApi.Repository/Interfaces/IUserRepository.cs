@@ -7,6 +7,8 @@ namespace RestfulApi.Repository.Interfaces
     {
         User ValidateCredentials(UserVO user);
 
+        User ValidateCredentials(string userName);
+
         User RefreshUserInfo(User user);
     }
 }

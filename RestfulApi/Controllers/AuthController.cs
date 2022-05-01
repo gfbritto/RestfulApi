@@ -16,10 +16,27 @@ namespace RestfulApi.Controllers
             this._loginBusiness = loginBusiness;
         }
 
-        [HttpPost]
+        [HttpPost("signin")]
         public IActionResult Signin([FromBody] UserVO user)
         {
             var token = _loginBusiness.ValidateCredentials(user);
+
+            if (token == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(token);
+        }
+
+        [HttpPost("refresh")]
+        public IActionResult RefreshToken([FromBody] TokenVO tokenVO)
+        {
+            if (tokenVO == null)
+            {
+                return BadRequest("Invalid client request");
+            }
+
+            var token = _loginBusiness.ValidateCredentials(tokenVO);
 
             if (token == null)
             {
