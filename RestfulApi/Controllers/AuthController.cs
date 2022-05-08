@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
 using RestfulApi.Models.Data.VO;
 
@@ -43,6 +44,20 @@ namespace RestfulApi.Controllers
                 return Unauthorized();
             }
             return Ok(token);
+        }
+
+        [HttpGet("revoke")]
+        [Authorize("Bearer")]
+        public IActionResult Revoke()
+        {
+            var username = User.Identity.Name;
+            var result = _loginBusiness.RevokeToken(username);
+
+            if (!result)
+            {
+                return BadRequest("Invalid client request");
+            }
+            return NoContent();
         }
     }
 }

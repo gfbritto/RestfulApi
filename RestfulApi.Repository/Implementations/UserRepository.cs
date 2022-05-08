@@ -55,5 +55,20 @@ namespace RestfulApi.Repository.Implementations
         {
             return _dbContext.Users.SingleOrDefault(user => user.UserName.Equals(userName));
         }
+
+        public bool RevokeToken(string userName)
+        {
+            var user = _dbContext.Users
+                .SingleOrDefault(user => user.UserName.Equals(userName)
+            );
+
+            if (user is null)
+            {
+                return false;
+            }
+            user.RefreshToken = null;
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }

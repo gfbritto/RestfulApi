@@ -7,5 +7,7 @@ namespace RestfulApi.Business.Interfaces
         TokenVO ValidateCredentials(UserVO userCredentials);
 
         TokenVO ValidateCredentials(TokenVO token);
+
+        bool RevokeToken(string userName);
     }
 }
