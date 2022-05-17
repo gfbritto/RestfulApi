@@ -1,17 +1,18 @@
-﻿using RestfulApi.Models;
+﻿using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 using System.Collections.Generic;
 
 namespace RestfulApi.Business.Interfaces
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
+        BookVO Create(BookVO book);
 
-        Book FindById(long id);
+        BookVO FindById(long id);
 
-        List<Book> FindAll();
+        List<BookVO> FindAll();
 
-        Book Update(Book book);
+        BookVO Update(BookVO book);
 
         void Delete(long id);
     }

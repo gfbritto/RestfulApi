@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Models;
+using RestfulApi.Models.Data.VO;
+using System.Collections.Generic;
 
 namespace RestfulApi.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
@@ -17,6 +20,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult GetAllPersons()
         {
             var result = _personFacade.FindAll();
@@ -29,7 +36,11 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPersonById(int id)
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult GetById(int id)
         {
             var result = _personFacade.FindById(id);
             if (result == null)
@@ -41,19 +52,27 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Person person)
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult Create([FromBody] PersonVO person)
         {
             if (person == null)
             {
                 return BadRequest();
             }
 
-            _personFacade.Create(person);
-            return CreatedAtAction(nameof(GetPersonById), new { id = person.Id }, person);
+            var result = _personFacade.Create(person);
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
         [HttpPut]
-        public IActionResult UpdatePerson([FromBody] Person person)
+        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdatePerson([FromBody] PersonVO person)
         {
             if (person == null)
             {
@@ -63,6 +82,9 @@ namespace RestfulApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult Delete(long id)
         {
             _personFacade.Delete(id);

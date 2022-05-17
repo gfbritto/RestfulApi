@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestfulApi.Repository.Persistence;
 
 namespace Migrations
 {
     [DbContext(typeof(RestfulApiDbContext))]
-    partial class RestfulApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220407022159_addUserModel")]
+    partial class addUserModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

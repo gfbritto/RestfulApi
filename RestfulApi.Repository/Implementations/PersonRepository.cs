@@ -1,4 +1,5 @@
-﻿using RestfulApi.Models;
+﻿using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.VO;
 using RestfulApi.Repository.Interfaces;
 using RestfulApi.Repository.Persistence;
 using System.Collections.Generic;

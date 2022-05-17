@@ -1,5 +1,7 @@
 ﻿using RestfulApi.Business.Interfaces;
-using RestfulApi.Models;
+using RestfulApi.Models.Core.Entities;
+using RestfulApi.Models.Data.Converter.Implementations;
+using RestfulApi.Models.Data.VO;
 using RestfulApi.Repository.Interfaces;
 using System.Collections.Generic;
 
@@ -8,15 +10,19 @@ namespace RestfulApi.Business.Implementations
     public class BookBusiness : IBookBusiness
     {
         private readonly IBookRepository _bookRepository;
+        private readonly BookConverter _converter;
 
         public BookBusiness(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
+            _converter = new BookConverter();
         }
 
-        public Book Create(Book book)
+        public BookVO Create(BookVO book)
         {
-            return _bookRepository.Create(book);
+            var entity = _converter.Parse(book);
+            entity = _bookRepository.Create(entity);
+            return _converter.Parse(entity);
         }
 
         public void Delete(long id)
@@ -24,19 +30,21 @@ namespace RestfulApi.Business.Implementations
             _bookRepository.Delete(id);
         }
 
-        public List<Book> FindAll()
+        public List<BookVO> FindAll()
         {
-            return _bookRepository.FindAll();
+            return _converter.Parse(_bookRepository.FindAll());
         }
 
-        public Book FindById(long id)
+        public BookVO FindById(long id)
         {
-            return _bookRepository.FindById(id);
+            return _converter.Parse(_bookRepository.FindById(id));
         }
 
-        public Book Update(Book book)
+        public BookVO Update(BookVO book)
         {
-            return _bookRepository.Update(book);
+            var entity = _converter.Parse(book);
+            entity = _bookRepository.Update(entity);
+            return _converter.Parse(entity);
         }
     }
 }

@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RestfulApi.Business.Interfaces;
-using RestfulApi.Models;
+using RestfulApi.Models.Data.VO;
+using System.Collections.Generic;
 
 namespace RestfulApi.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("[controller]/v{version:apiVersion}")]
     public class BookController : ControllerBase
     {
@@ -17,6 +20,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult GetAllBooks()
         {
             var result = _bookFacade.FindAll();
@@ -32,6 +39,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public IActionResult GetById(long id)
         {
             var result = _bookFacade.FindById(id);
@@ -44,7 +55,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Book book)
+        [ProducesResponseType(201, Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Create([FromBody] BookVO book)
         {
             var result = _bookFacade.Create(book);
 
@@ -52,7 +66,10 @@ namespace RestfulApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] Book book)
+        [ProducesResponseType(201, Type = typeof(BookVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Update([FromBody] BookVO book)
         {
             return Ok(_bookFacade.Update(book));
         }
